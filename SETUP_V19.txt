@@ -1,0 +1,7 @@
+V19 TEST BUILD — Do not overwrite the live V18 until testing is complete.
+Upload all files together to a separate GitHub Pages test repository or test branch.
+This build shares the existing IndexedDB database name with V18 on the same origin; use a separate origin for isolated testing.
+Check the roster and tap player numbers for goal, assist, penalty, goalie change and event edits.
+Starting goalie numbers are selected from the team master roster during setup.
+Roster checkboxes save immediately in IndexedDB.
+The Google Sheets backend is unchanged.
