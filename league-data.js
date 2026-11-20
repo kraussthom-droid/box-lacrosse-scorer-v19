@@ -320,20 +320,108 @@ const LEAGUE_DATA = {
   ],
   "schedule": [
     {
-      "id": "2026-11-20-g1",
-      "date": "2026-11-20",
-      "start": "19:00",
-      "end": "20:00",
-      "team1": "Thunder",
-      "team2": "Tsunami"
+        "id": "2026-11-20-g1",
+        "date": "2026-11-20",
+        "start": "19:00",
+        "end": "20:00",
+        "team1": "Thunder",
+        "team2": "Tsunami",
+        "type": "regular"
     },
     {
-      "id": "2026-11-20-g2",
-      "date": "2026-11-20",
-      "start": "21:00",
-      "end": "22:00",
-      "team1": "Hurricanes",
-      "team2": "Lightning"
+        "id": "2026-11-20-g2",
+        "date": "2026-11-20",
+        "start": "21:00",
+        "end": "22:00",
+        "team1": "Hurricanes",
+        "team2": "Lightning",
+        "type": "regular"
+    },
+    {
+        "id": "2026-11-27-g1",
+        "date": "2026-11-27",
+        "start": "20:00",
+        "end": "21:00",
+        "team1": "Lightning",
+        "team2": "Tsunami",
+        "type": "regular"
+    },
+    {
+        "id": "2026-11-27-g2",
+        "date": "2026-11-27",
+        "start": "21:00",
+        "end": "22:00",
+        "team1": "Thunder",
+        "team2": "Hurricanes",
+        "type": "regular"
+    },
+    {
+        "id": "2026-12-04-g1",
+        "date": "2026-12-04",
+        "start": "19:00",
+        "end": "20:00",
+        "team1": "Thunder",
+        "team2": "Lightning",
+        "type": "regular"
+    },
+    {
+        "id": "2026-12-04-g2",
+        "date": "2026-12-04",
+        "start": "21:00",
+        "end": "22:00",
+        "team1": "Hurricanes",
+        "team2": "Tsunami",
+        "type": "regular"
+    },
+    {
+        "id": "2026-12-11-g1",
+        "date": "2026-12-11",
+        "start": "20:00",
+        "end": "21:00",
+        "team1": "",
+        "team2": "",
+        "type": "semifinal",
+        "label": "Semifinal \u2014 1st vs 4th"
+    },
+    {
+        "id": "2026-12-11-g2",
+        "date": "2026-12-11",
+        "start": "21:00",
+        "end": "22:00",
+        "team1": "",
+        "team2": "",
+        "type": "semifinal",
+        "label": "Semifinal \u2014 2nd vs 3rd"
+    },
+    {
+        "id": "2026-12-18-g1",
+        "date": "2026-12-18",
+        "start": "19:00",
+        "end": "20:00",
+        "team1": "",
+        "team2": "",
+        "type": "championship",
+        "label": "Championship week \u2014 teams TBA"
+    },
+    {
+        "id": "2026-12-18-g2",
+        "date": "2026-12-18",
+        "start": "20:00",
+        "end": "21:00",
+        "team1": "",
+        "team2": "",
+        "type": "championship",
+        "label": "Championship week \u2014 teams TBA"
+    },
+    {
+        "id": "2026-12-18-g3",
+        "date": "2026-12-18",
+        "start": "21:00",
+        "end": "22:00",
+        "team1": "",
+        "team2": "",
+        "type": "championship",
+        "label": "Championship week \u2014 teams TBA"
     }
-  ]
+]
 };
