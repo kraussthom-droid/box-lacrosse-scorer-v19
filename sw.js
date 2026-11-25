@@ -1,5 +1,5 @@
-const CACHE = 'box-lacrosse-offline-v213-opening-goalie-20261124';
-const ASSETS = ['./','./index.html','./app.js','./league-data.js','./print-rosters.html','./report.html','./report.js','./manifest.webmanifest','./icon.svg','./716-lacrosse-logo.png'];
+const CACHE = 'box-lacrosse-offline-v2131-opening-goalie-20261124';
+const ASSETS = ['./','./index.html','./app.js','./app.js?v=2131','./league-data.js','./print-rosters.html','./report.html','./report.js','./manifest.webmanifest','./icon.svg','./716-lacrosse-logo.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));
 });
