@@ -220,6 +220,22 @@ $('closeRoster').onclick=()=>$('rosterDialog').close();
 $('rosterTeams').onchange=async ev=>{const input=ev.target.closest('input[data-attid]');const g=active();if(!input||!g||g.status==='final')return;gameAttendance(g,Number(input.dataset.attteam))[input.dataset.attid]=input.checked;g.version=(g.version||0)+1;g.metaDirty=true;await commit();renderRosters()};
 $('addPlayerForm').onsubmit=async ev=>{ev.preventDefault();const g=active();if(!g||g.status==='final')return;const t=Number($('addPlayerTeam').value),id=teamId(g,t),jersey=$('addPlayerJersey').value.trim(),name=$('addPlayerName').value.trim(),rs=roster(g,t);if(!validJersey(jersey)||!name){alert('Enter jersey and player name.');return}if(rs.some(r=>r.jersey===jersey)){alert('That jersey is already on this team roster. Check the existing player before adding.');return}if(rs.some(r=>r.name.toLowerCase()===name.toLowerCase())){alert('That player name already exists on this team roster. Check the existing entry.');return}const player={id:uuid(),teamId:id,jersey,name,goalie:$('addPlayerGoalie').checked,dirty:true,version:1};if(!state.rosters[id])state.rosters[id]=[];state.rosters[id].push(player);gameAttendance(g,t)[player.id]=true;g.version=(g.version||0)+1;g.metaDirty=true;await commit();$('addPlayerForm').reset();renderRosters()};
 
+// Opening-clock changes before any recorded play replace the initial goalie for attendance purposes.
+function attendanceParticipation(g,t,pid){
+ const ev=events(g);let opening=playerId(g,t,startingGoalie(g,t));let playSeen=false;
+ for(const e of ev){
+  const openingChange=e.type==='goalie_change'&&Number(e.quarter)===1&&e.elapsed!==null&&e.elapsed!==undefined&&e.elapsed!==''&&Number(e.elapsed)===0&&!playSeen;
+  if(openingChange){if(Number(e.team)===t){const next=e.goalieId||playerId(g,t,e.goalie);if(next)opening=next;}continue;}
+  playSeen=true;
+  if([e.scorerId,e.assistId,e.playerId,e.goalieId,e.goalieAgainstId].includes(pid))return true;
+  // Legacy events may lack IDs; resolve against the historical roster.
+  const et=Number(e.team);
+  if(e.type==='goal'&&[playerId(g,et,e.scorer),playerId(g,et,e.assist),playerId(g,1-et,e.goalieAgainst)].includes(pid))return true;
+  if(e.type==='penalty'&&playerId(g,et,e.player)===pid)return true;
+  if((e.type==='save'||e.type==='goalie_change')&&playerId(g,et,e.goalie)===pid)return true;
+ }
+ return opening===pid;
+}
 // V21.2: correct existing attendance without touching events or game status.
 $('gameHistory').addEventListener('click',ev=>{
  const b=ev.target.closest('button[data-attendance-edit]');if(!b)return;
@@ -229,7 +245,7 @@ $('gameHistory').addEventListener('click',ev=>{
  $('historyAttendanceRows').innerHTML=[0,1].map(t=>{
  const id=teamId(g,t),a=g.attendance?.[id]||{},rs=roster(g,t);
  return '<h3>'+escapeHTML((t?g.away:g.home).name)+'</h3>'+Object.entries(a).map(([pid,playing])=>{
- const r=rs.find(x=>x.id===pid);const used=events(g).some(e=>[e.scorerId,e.assistId,e.playerId,e.goalieId,e.goalieAgainstId].includes(pid))|| (r&&String(r.jersey)===String((t?g.away:g.home).goalie));
+ const r=rs.find(x=>x.id===pid);const used=attendanceParticipation(g,t,pid);
  return '<label style="display:flex;gap:8px;align-items:center"><input style="width:24px;min-height:24px" type="checkbox" data-team="'+escapeHTML(id)+'" data-player="'+escapeHTML(pid)+'" '+(playing?'checked':'')+' '+(used?'disabled':'')+'>'+escapeHTML(r?'#'+r.jersey+' '+r.name:pid)+(used?' (recorded participation)':'')+'</label>';
  }).join('');}).join('');
  $('historyAttendanceSave').onclick=async()=>{
