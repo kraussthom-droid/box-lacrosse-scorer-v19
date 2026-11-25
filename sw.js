@@ -1,4 +1,4 @@
-const CACHE = 'box-lacrosse-offline-v211-roster-refresh-20261124';
+const CACHE = 'box-lacrosse-offline-v212-attendance-20261124';
 const ASSETS = ['./','./index.html','./app.js','./league-data.js','./print-rosters.html','./report.html','./report.js','./manifest.webmanifest','./icon.svg','./716-lacrosse-logo.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));
