@@ -1,10 +1,10 @@
-const CACHE = 'box-lacrosse-offline-v2131-opening-goalie-20261124';
-const ASSETS = ['./','./index.html','./app.js','./app.js?v=2131','./league-data.js','./print-rosters.html','./report.html','./report.js','./manifest.webmanifest','./icon.svg','./716-lacrosse-logo.png'];
+const CACHE = 'box-lacrosse-live-v2142-20261127';
+const ASSETS = ['./','./index.html','./app.js','./app.js?v=214','./league-data.js','./print-rosters.html','./report.html','./report.js','./report.js?v=2142','./manifest.webmanifest','./icon.svg','./716-lacrosse-logo.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', event => {
-  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE && key.startsWith('box-lacrosse-offline-')).map(key => caches.delete(key)))).then(() => self.clients.claim()));
+  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE && key.startsWith('box-lacrosse-live-')).map(key => caches.delete(key)))).then(() => self.clients.claim()));
 });
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
